@@ -82,6 +82,14 @@ IF( MSVC)
 			STRING(REGEX REPLACE "/MD" "/MT" ${flag_var} "${${flag_var}}")
 		ENDIF(${flag_var} MATCHES "/MD")
 	ENDFOREACH(flag_var)
+	
+	SET( p4api_LIBS
+		 ${p4api_LIBS}
+		 oldnames.lib
+		 kernel32.lib
+		 ws2_32.lib
+		 advapi32.lib
+	)
 
 	IF (MSVC_VERSION EQUAL 1900)
 		IF( CMAKE_BUILD_TYPE EQUAL Debug)
@@ -92,12 +100,6 @@ IF( MSVC)
 				${CMAKE_CURRENT_SOURCE_DIR}/Windows/VS2015/lib_x86/Debug/ssleay32.lib
 				${CMAKE_CURRENT_SOURCE_DIR}/Windows/VS2015/lib_x86/Debug/libeay32.lib
 				${p4api_LIBS}
-				libssh2
-				libcmtd.lib
-				oldnames.lib
-				kernel32.lib
-				ws2_32.lib
-				advapi32.lib
 			)
 		ELSE()
 			SET ( p4api_LIBS
@@ -107,12 +109,6 @@ IF( MSVC)
 				${CMAKE_CURRENT_SOURCE_DIR}/Windows/VS2015/lib_x86/Release/ssleay32.lib
 				${CMAKE_CURRENT_SOURCE_DIR}/Windows/VS2015/lib_x86/Release/libeay32.lib
 				${p4api_LIBS}
-				libssh2
-				libcmt.lib
-				oldnames.lib
-				kernel32.lib
-				ws2_32.lib
-				advapi32.lib
 			)
 		ENDIF()
 	ENDIF() 
@@ -124,9 +120,29 @@ IF( MSVC)
 			${CMAKE_CURRENT_SOURCE_DIR}/Windows/VS2013/lib_x86/ssleay32.lib
 			${CMAKE_CURRENT_SOURCE_DIR}/Windows/VS2013/lib_x86/libeay32.lib
 			${p4api_LIBS}
-			libssh2
 		)
 	ENDIF()
+	IF (MSVC_VERSION EQUAL 1700)
+		IF( CMAKE_BUILD_TYPE EQUAL Debug)
+			SET ( p4api_LIBS
+				${CMAKE_CURRENT_SOURCE_DIR}/Windows/VS2012/lib_x86/Debug/libclient.lib
+				${CMAKE_CURRENT_SOURCE_DIR}/Windows/VS2012/lib_x86/Debug/librpc.lib
+				${CMAKE_CURRENT_SOURCE_DIR}/Windows/VS2012/lib_x86/Debug/libsupp.lib
+				${CMAKE_CURRENT_SOURCE_DIR}/Windows/VS2012/lib_x86/Debug/ssleay32.lib
+				${CMAKE_CURRENT_SOURCE_DIR}/Windows/VS2012/lib_x86/Debug/libeay32.lib
+				${p4api_LIBS}
+			)
+		ELSE()
+			SET ( p4api_LIBS
+				${CMAKE_CURRENT_SOURCE_DIR}/Windows/VS2012/lib_x86/Release/libclient.lib
+				${CMAKE_CURRENT_SOURCE_DIR}/Windows/VS2012/lib_x86/Release/librpc.lib
+				${CMAKE_CURRENT_SOURCE_DIR}/Windows/VS2012/lib_x86/Release/libsupp.lib
+				${CMAKE_CURRENT_SOURCE_DIR}/Windows/VS2012/lib_x86/Release/ssleay32.lib
+				${CMAKE_CURRENT_SOURCE_DIR}/Windows/VS2012/lib_x86/Release/libeay32.lib
+				${p4api_LIBS}
+			)
+		ENDIF()
+	ENDIF() 
 ELSE()
 	SET ( p4api_LIBS
 		${CMAKE_CURRENT_SOURCE_DIR}/Linux/linux26x86/lib/libclient.a
